@@ -1,0 +1,117 @@
+/* ───────── Tablero del radio operador (tema oscuro de centro de control) ───────── */
+.operador {
+  --fondo: #0b1220; --panel: #0f172a; --borde: #1e293b; --texto-o: #e2e8f0; --tenue-o: #94a3b8;
+  height: 100vh; height: 100dvh; display: flex; flex-direction: column; background: var(--fondo); color: var(--texto-o);
+}
+.operador a:not(.boton):not(.logo) { color: #7dd3fc; }
+.operador .texto-tenue { color: var(--tenue-o); }
+
+.operador__barra { display: flex; align-items: center; gap: 16px; padding: 10px 16px; border-bottom: 1px solid var(--borde); flex-wrap: wrap; }
+.operador__barra .logo__insignia { width: 32px; height: 32px; }
+.operador__barra .logo__texto strong { font-size: 1.15rem; }
+.operador__rol { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--tenue-o); border-left: 1px solid var(--borde); padding-left: 16px; }
+.contadores { display: flex; gap: 6px; list-style: none; margin: 0 0 0 auto; padding: 0; flex-wrap: wrap; }
+.contadores button {
+  display: flex; align-items: center; gap: 6px; background: #111a2e; border: 1px solid var(--borde); color: var(--tenue-o);
+  border-radius: 8px; padding: 4px 10px; font-size: 0.8rem; cursor: pointer;
+}
+.contadores b { font-family: var(--display); font-size: 1.15rem; color: var(--c); }
+.contadores button.es-activo { border-color: var(--c); color: var(--texto-o); background: color-mix(in srgb, var(--c) 15%, #111a2e); }
+.operador__herramientas { display: flex; gap: 6px; }
+.operador__alerta { background: #7f1d1d; color: #fee2e2; padding: 8px 16px; font-size: 0.9rem; }
+
+.operador__cuerpo { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 420px; }
+.operador__mapa { position: relative; min-height: 0; z-index: 0; }
+.operador__panel { background: var(--panel); border-left: 1px solid var(--borde); overflow-y: auto; min-height: 0; }
+
+.operador__panel-cabecera { position: sticky; top: 0; z-index: 2; background: var(--panel); padding: 14px 16px 10px; border-bottom: 1px solid var(--borde); }
+.operador__panel-cabecera h2 { font-size: 1.5rem; text-transform: uppercase; margin-bottom: 10px; }
+.operador__panel-cabecera h2 span { color: var(--tenue-o); font-weight: 600; font-size: 1.1rem; margin-left: 6px; }
+
+/* Filtros */
+.filtros { display: flex; gap: 6px; flex-wrap: wrap; }
+.filtros select, .acciones select, .acciones input {
+  background: #111a2e; color: var(--texto-o); border: 1px solid #334155; border-radius: 8px; padding: 7px 10px; font-size: 0.85rem; min-width: 0;
+}
+.filtros select { flex: 1 1 140px; }
+.interruptor { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--tenue-o); cursor: pointer; }
+.interruptor input { accent-color: #ef4444; width: 16px; height: 16px; }
+
+/* Lista */
+.lista-reportes { list-style: none; margin: 0; padding: 8px; display: grid; gap: 6px; }
+.lista-vacia { padding: 32px 20px; text-align: center; }
+.lista-vacia p + p { margin-top: 8px; }
+.item-reporte {
+  width: 100%; display: grid; grid-template-columns: 52px 1fr; text-align: left; padding: 0; overflow: hidden;
+  border-radius: 10px; border: 1px solid var(--borde); background: #111a2e; color: var(--texto-o); cursor: pointer; transition: border-color 0.12s, background 0.12s;
+}
+.item-reporte:hover { border-color: #334155; background: #15203a; }
+.item-reporte.es-seleccionado { border-color: var(--c); background: #1e3a5f; }
+.item-reporte.es-final { opacity: 0.55; }
+.item-reporte__codigo { background: var(--c); color: #fff; font-family: var(--display); font-weight: 800; font-size: 1.15rem; display: grid; place-items: center; }
+.item-reporte__cuerpo { padding: 9px 12px; display: grid; gap: 4px; min-width: 0; }
+.item-reporte__fila { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.item-reporte__hora { font-variant-numeric: tabular-nums; font-size: 0.8rem; color: var(--tenue-o); }
+.item-reporte__que { font-size: 0.85rem; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-reporte__iconos { display: flex; gap: 8px; font-size: 0.8rem; color: var(--tenue-o); }
+.operador .insignia--estado { color: color-mix(in srgb, var(--c) 60%, #fff); background: color-mix(in srgb, var(--c) 20%, transparent); }
+.operador .insignia--grupo { color: #e2e8f0; background: color-mix(in srgb, var(--c) 22%, transparent); }
+
+/* Detalle */
+.detalle { padding: 14px 16px 28px; }
+.detalle__cabecera { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.detalle__radicado { font: 600 0.85rem ui-monospace, SFMono-Regular, monospace; color: var(--tenue-o); }
+.detalle__titulo { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.detalle__que-ve { font-size: 1.15rem; font-weight: 600; margin: 12px 0 4px; line-height: 1.35; }
+.detalle__fotos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+.detalle__fotos button { padding: 0; border: 1px solid #334155; border-radius: 8px; overflow: hidden; aspect-ratio: 1; cursor: zoom-in; background: #000; }
+.detalle__fotos img { width: 100%; height: 100%; object-fit: cover; }
+.detalle__datos { display: grid; grid-template-columns: 100px 1fr; gap: 6px 12px; margin: 16px 0; font-size: 0.9rem; background: #111a2e; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--borde); }
+.detalle__datos dt { color: var(--tenue-o); }
+.detalle__datos dd { margin: 0; overflow-wrap: anywhere; }
+.detalle__info { background: #2a2109; border: 1px solid #a16207; border-radius: 10px; padding: 10px 12px; font-size: 0.88rem; margin-bottom: 12px; display: grid; gap: 4px; }
+.detalle__historial { margin-top: 16px; font-size: 0.85rem; color: var(--tenue-o); }
+.detalle__historial summary { cursor: pointer; font-weight: 600; }
+.detalle__historial ol { padding-left: 18px; margin: 8px 0 0; }
+.detalle__historial li::marker { color: var(--c); }
+.detalle__historial b { color: var(--c); }
+
+/* Acciones */
+.acciones { display: grid; gap: 10px; }
+.acciones__paso { border: 1px solid var(--borde); border-radius: 10px; padding: 12px; display: grid; gap: 8px; background: #0d1527; }
+.acciones__paso.es-hecho { opacity: 0.7; }
+.acciones__paso h4 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.06em; display: flex; align-items: center; gap: 8px; color: var(--tenue-o); }
+.acciones__paso h4 span { width: 22px; height: 22px; border-radius: 50%; background: #1e293b; color: var(--texto-o); display: grid; place-items: center; font-size: 0.85rem; }
+.acciones__fila { display: flex; gap: 6px; }
+.acciones__fila > select, .acciones__fila > input { flex: 1; }
+.acciones__etiqueta { font-size: 0.8rem; color: var(--tenue-o); }
+.acciones__hecho { font-size: 0.9rem; color: #cbd5e1; }
+.acciones__bloqueo { font-size: 0.82rem; color: #fbbf24; }
+.acciones .boton { font-size: 0.88rem; padding: 8px 12px; }
+.acciones .boton--bloque { padding: 11px 14px; font-size: 0.95rem; }
+.unidades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.unidad { position: relative; text-align: center; padding: 8px 4px; border-radius: 8px; border: 1px solid #334155; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+.unidad input { position: absolute; opacity: 0; pointer-events: none; }
+.unidad.es-activa { background: #7f1d1d; border-color: #ef4444; color: #fff; }
+.unidad.es-bloqueada { opacity: 0.4; cursor: not-allowed; }
+.unidad:has(input:focus-visible) { outline: 3px solid #f59e0b; }
+
+/* Responsive: en tablet y celular, mapa arriba y panel abajo */
+@media (max-width: 900px) {
+  .operador { height: auto; min-height: 100vh; }
+  .operador__cuerpo { grid-template-columns: 1fr; }
+  .operador__mapa { height: 46vh; min-height: 300px; }
+  .operador__panel { border-left: 0; border-top: 1px solid var(--borde); overflow: visible; }
+  .operador__rol { display: none; }
+  .contadores { margin-left: 0; width: 100%; order: 3; }
+  .operador__herramientas { margin-left: auto; }
+}
+@media (max-width: 480px) {
+  .contadores button { font-size: 0.72rem; padding: 3px 7px; }
+  .unidades { grid-template-columns: repeat(2, 1fr); }
+  .acciones__fila { flex-direction: column; }
+  .leyenda { min-width: 0 !important; font-size: 11px !important; }
+}
+@media (max-width: 1440px) and (min-width: 901px) {
+  .operador__rol { display: none; }
+}
