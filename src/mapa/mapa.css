@@ -1,0 +1,84 @@
+/* Pin con forma de gota, del color del grupo (variable --color) */
+.pin {
+  position: relative;
+  background: var(--color);
+  border: 3px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+.pin::after {
+  content: '';
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  background: #fff;
+}
+.pin--seleccionado {
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6), 0 0 18px var(--color);
+}
+
+/* Animación de pulso: se aplica a los reportes en estado Recibido
+   (ver clasesPorEstado en MapaOperador.jsx). */
+.pin--pulso::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 3px solid var(--color);
+  animation: pulso 1.4s ease-out infinite;
+}
+@keyframes pulso {
+  from { transform: scale(0.6); opacity: 1; }
+  to { transform: scale(1.6); opacity: 0; }
+}
+
+/* Reportes Cerrado o Descartado: gris y con opacidad baja, ya no requieren acción. */
+.pin--apagado {
+  --color: #9ca3af;
+  opacity: 0.5;
+  filter: grayscale(1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Agrupación de reportes cercanos (modo emergencia masiva) */
+.cluster {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color);
+  color: #fff;
+  font: 700 14px 'Barlow Condensed', system-ui, sans-serif;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--color) 35%, transparent), 0 3px 10px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+.cluster--apagado { background: #9ca3af; opacity: 0.6; box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+
+/* Popup del pin */
+.popup { min-width: 210px; font-family: 'Barlow', system-ui, sans-serif; }
+.popup__cabeza { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.popup__grupo { color: #fff; font-weight: 700; padding: 1px 7px; border-radius: 4px; font-size: 12px; }
+.popup__radicado { font: 11px ui-monospace, monospace; color: #64748b; }
+.popup__nombre { display: block; font-size: 14px; }
+.popup__que-ve { margin: 4px 0 !important; font-style: italic; color: #334155; }
+.popup__lugar { margin: 0 0 6px !important; color: #64748b; font-size: 12px; }
+.popup__pie { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 6px; }
+.popup__estado { font-weight: 700; font-size: 12px; color: var(--c); }
+.popup__estado::before { content: '●'; margin-right: 4px; }
+
+/* Leyenda y controles sobre el mapa */
+.leyenda {
+  background: rgba(15, 23, 42, 0.9);
+  color: #e2e8f0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font: 12px system-ui, sans-serif;
+  min-width: 220px;
+}
+.leyenda__titulo {
+  all: unset; cursor: pointer; display: flex; justify-content: space-between; width: 100%;
+  font-weight: 700; margin-bottom: 6px; letter-spacing: .04em;
+}
+.leyenda__fila { display: flex; align-items: center; gap: 8px; margin: 3px 0; }
+.leyenda__punto { width: 10px; height: 10px; border-radius: 50%; }
